@@ -1,21 +1,24 @@
-# @Author: Chen Mingshuo & Hongming Zhu
-# @Date: 2024/06/07
+# @Author: caobaoqi1029
+# @Date: 2024/09/11
+# @Info:
+# - 参考自 bilibili up [不立 flag 就不会死](https://space.bilibili.com/149178346)
+# - 视频地址: https://www.bilibili.com/video/BV1vq421w7mn
+# - github: https://github.com/byrzhm/hadoop-docker-cluster?tab=readme-ov-file
 
 FROM ubuntu:22.04
 
 WORKDIR /root/
 
-# apt换清华源
-# 使用 http, 因为 https 需要 certificates
+# apt 换清华源(使用 http, 因为 https 需要 certificates)
 RUN sed -i "s@http://.*.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
 
-# 安装JDK等
+# 安装 JDK 等
 RUN apt-get update && \
     apt-get install -y openjdk-8-jdk wget vim openssh-server net-tools
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
 
-# 配置SSH免密码登录
+# 配置 SSH 免密码登录
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
@@ -98,19 +101,19 @@ ENV PATH=$FLINK_HOME/bin:$PATH
 ENV KAFKA_HOME=/root/kafka
 ENV PATH=$KAFKA_HOME/bin:$PATH
 
-# 配置Hadoop
+# 配置 Hadoop
 COPY hadoop_config/* /root/hadoop/etc/hadoop/
 RUN sed -i '1i export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' /root/hadoop/etc/hadoop/hadoop-env.sh
 
-# 配置Zookeeper
+# 配置 Zookeeper
 RUN mkdir /root/zookeeper/tmp
 RUN cp /root/zookeeper/conf/zoo_sample.cfg /root/zookeeper/conf/zoo.cfg
 COPY zookeeper_config/* /root/zookeeper/conf/
 
-# 配置Kafka
+# 配置 Kafka
 COPY kafka_config/* /root/kafka/config/
 
-# 配置SSH
+# 配置 SSH
 RUN echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
@@ -124,5 +127,5 @@ COPY scripts/* /root/scripts/
 RUN chmod -R 777 /root/scripts
 ENV PATH=/root/scripts:$PATH
 
-# 启动SSH服务
+# 启动 SSH 服务
 CMD ["bash", "-c", "bash"]
