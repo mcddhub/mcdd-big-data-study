@@ -1,0 +1,51 @@
+services:
+  master:
+    image: caobaoqi1029/hadoop:1.0.0
+    container_name: master
+    hostname: master
+    ports:
+      - "8088:8088" # Yarn Web UI
+
+    command: bash -c "
+      service ssh restart &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+    depends_on:
+      - slave1
+      - slave2
+      - slave3
+
+  slave1:
+    image: caobaoqi1029/hadoop:1.0.0
+    container_name: slave1
+    hostname: slave1
+    command: bash -c "
+      service ssh restart &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+
+  slave2:
+    image: caobaoqi1029/hadoop:1.0.0
+    container_name: slave2
+    hostname: slave2
+    command: bash -c "
+      service ssh restart &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+
+  slave3:
+    image: caobaoqi1029/hadoop:1.0.0
+    container_name: slave3
+    hostname: slave3
+    command: bash -c "
+      service ssh restart &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+
+networks:
+  hadoop-network:
+    driver: bridge
