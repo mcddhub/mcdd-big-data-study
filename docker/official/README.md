@@ -154,7 +154,7 @@ docker-compose up -d
 
 ```shell
 docker exec -ti official-namenode-1 /bin/bash
-yarn jar share/hadoop/mapreduce/hadoop-mapreduce-examples-HADOOP_VERSION.jar pi 10 15
+yarn jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.6.jar pi 10 15
 
 Number of Maps  = 10
 Samples per Map = 15
@@ -178,4 +178,141 @@ Estimated value of Pi is 3.17333333333333333333
 docker-compose down
 ```
 
-# 
+# 将 Spark 添加到 Namenode
+
+MapReduce 是 Hadoop 的默认执行引擎。要提交 Spark 作业，必须安装 Spark。添加并编辑以下文件，然后使用 `docker-compse up` 命令重建群集。
+
+```repo
+# CentOS-Base.repo
+#
+# The mirror system uses the connecting IP address of the client and the
+# update status of each mirror to pick mirrors that are updated to and
+# geographically close to the client.  You should use this for CentOS updates
+# unless you are manually picking other mirrors.
+#
+# If the mirrorlist= does not work for you, as a fall back you can try the
+# remarked out baseurl= line instead.
+#
+#
+
+[base]
+name=CentOS-$releasever - Base - mirrors.aliyun.com
+failovermethod=priority
+baseurl=https://mirrors.aliyun.com/centos/$releasever/os/$basearch/
+        https://mirrors.aliyuncs.com/centos/$releasever/os/$basearch/
+        https://mirrors.cloud.aliyuncs.com/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+#released updates
+[updates]
+name=CentOS-$releasever - Updates - mirrors.aliyun.com
+failovermethod=priority
+baseurl=https://mirrors.aliyun.com/centos/$releasever/updates/$basearch/
+        https://mirrors.aliyuncs.com/centos/$releasever/updates/$basearch/
+        https://mirrors.cloud.aliyuncs.com/centos/$releasever/updates/$basearch/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras - mirrors.aliyun.com
+failovermethod=priority
+baseurl=https://mirrors.aliyun.com/centos/$releasever/extras/$basearch/
+        https://mirrors.aliyuncs.com/centos/$releasever/extras/$basearch/
+        https://mirrors.cloud.aliyuncs.com/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-$releasever - Plus - mirrors.aliyun.com
+failovermethod=priority
+baseurl=https://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/
+        https://mirrors.aliyuncs.com/centos/$releasever/centosplus/$basearch/
+        https://mirrors.cloud.aliyuncs.com/centos/$releasever/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+#contrib - packages by Centos Users
+[contrib]
+name=CentOS-$releasever - Contrib - mirrors.aliyun.com
+failovermethod=priority
+baseurl=https://mirrors.aliyun.com/centos/$releasever/contrib/$basearch/
+        https://mirrors.aliyuncs.com/centos/$releasever/contrib/$basearch/
+        https://mirrors.cloud.aliyuncs.com/centos/$releasever/contrib/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+```
+
+
+
+```shell
+Makefile
+config
+docker-compose.yaml
+```
+
+```yaml
+version: "2"
+services:
+  namenode:
+    image: apache/hadoop:3
+    hostname: namenode
+    volumes:
+      - ./Makefile:/opt/hadoop/Makefile
+      - ./soft/spark-3.5.2-bin-hadoop3.tgz:/opt/spark/spark-3.5.2-bin-hadoop3.tgz
+      - ./repos/:/etc/yum.repos.d
+    ports:
+      - "9870:9870"
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+    command: bash -c "sudo yum install -y make && make install-spark && make install-python3 && make start-namenode"
+  datanode_1:
+    image: apache/hadoop:3
+    command: [ "hdfs", "datanode" ]
+    env_file:
+      - ./config
+  datanode_2:
+    image: apache/hadoop:3
+    command: [ "hdfs", "datanode" ]
+    env_file:
+      - ./config
+  resourcemanager:
+    image: apache/hadoop:3
+    hostname: resourcemanager
+    command: [ "yarn", "resourcemanager" ]
+    ports:
+      - "8088:8088"
+    env_file:
+      - ./config
+    volumes:
+      - ./test.sh:/opt/test.sh
+  nodemanager:
+    image: apache/hadoop:3
+    command: [ "yarn", "nodemanager" ]
+    env_file:
+      - ./config
+  firefox:
+    image: jlesage/firefox
+    hostname: firefox
+    ports:
+      - "5800:5800"
+```
+
+
+
+```shell
+docker exec -ti official-namenode-1 /bin/bash
+sudo /opt/spark/spark-3.5.2-bin-hadoop3/bin/spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--class org.apache.spark.examples.SparkPi \
+/opt/spark/spark-3.5.2-bin-hadoop3/examples/jars/spark-examples_2.12-3.5.2.jar 
+```
+
