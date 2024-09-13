@@ -1,5 +1,6 @@
 package com.mcddhub;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -19,9 +20,9 @@ import java.io.IOException;
  * @author: caobaoqi1029
  * @date: 2024/9/12 13:01
  */
+@Slf4j
 public class WordCount {
-    public static class TokenizerMapper
-            extends Mapper<Object, Text, Text, IntWritable> {
+    public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
@@ -53,6 +54,7 @@ public class WordCount {
     }
 
     public static void main(String[] args) throws Exception {
+        log.info("Log SYS ini success ");
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
         job.setJarByClass(WordCount.class);
@@ -61,8 +63,8 @@ public class WordCount {
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileInputFormat.addInputPath(job, new Path("/input.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("/output"));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
