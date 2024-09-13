@@ -1,4 +1,4 @@
-# mcdd-big-data-hadoop-study
+# mcdd-big-data-study
 
 ```shell
 start-all.sh # 启动 hadoop

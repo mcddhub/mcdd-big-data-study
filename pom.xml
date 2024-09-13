@@ -18,7 +18,7 @@
     </repositories>
 
     <groupId>com.mcddhub</groupId>
-    <artifactId>mcdd-big-data-hadoop-study</artifactId>
+    <artifactId>mcdd-big-data-study</artifactId>
     <version>1.0.0</version>
 
     <properties>
