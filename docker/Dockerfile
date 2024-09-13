@@ -10,9 +10,15 @@ RUN sed -i "s@http://.*.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /etc/a
 
 # 安装 JDK 等
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk wget vim openssh-server net-tools
+    apt-get install -y openjdk-8-jdk wget vim openssh-server net-tools && \
+    apt-get install -y curl maven git
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+
+# scripts
+COPY scripts/* /root/scripts/
+RUN chmod -R 777 /root/scripts
+ENV PATH=/root/scripts:$PATH
 
 # 配置 SSH 免密码登录
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && \
@@ -30,7 +36,7 @@ RUN wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.9.2/a
 RUN tar -xzvf apache-zookeeper-3.9.2-bin.tar.gz && \
     rm apache-zookeeper-3.9.2-bin.tar.gz && \
     mv apache-zookeeper-3.9.2-bin zookeeper && \
-    chmod -R 777 zookeeper \
+    chmod -R 777 zookeeper
 
 # 下载并解压 Kafka
 # RUN wget https://mirrors.aliyun.com/apache/kafka/3.7.1/kafka_2.12-3.7.1.tgz
@@ -92,13 +98,8 @@ RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
 
-
 RUN echo "export HADOOP_CLASSPATH=`hadoop classpath`" >> /root/.bashrc
-
-# scripts
-COPY scripts/* /root/scripts/
-RUN chmod -R 777 /root/scripts
-ENV PATH=/root/scripts:$PATH
 
 # 启动 SSH 服务
 CMD ["bash", "-c", "bash"]
+

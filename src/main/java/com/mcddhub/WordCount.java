@@ -22,13 +22,14 @@ import java.io.IOException;
  */
 @Slf4j
 public class WordCount {
+    private static final String HDFS_URI = "hdfs://master:8020";
+
     public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
 
-        public void map(Object key, Text value, Context context
-        ) throws IOException, InterruptedException {
+        public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] tokens = value.toString().split("\\s+");
             for (String token : tokens) {
                 word.set(token);
@@ -37,13 +38,11 @@ public class WordCount {
         }
     }
 
-    public static class IntSumReducer
-            extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         private IntWritable result = new IntWritable();
 
         public void reduce(Text key, Iterable<IntWritable> values,
-                           Context context
-        ) throws IOException, InterruptedException {
+                Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable val : values) {
                 sum += val.get();
@@ -54,7 +53,6 @@ public class WordCount {
     }
 
     public static void main(String[] args) throws Exception {
-        log.info("Log SYS ini success ");
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
         job.setJarByClass(WordCount.class);
@@ -63,8 +61,8 @@ public class WordCount {
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path("/input.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("/output"));
+        FileInputFormat.addInputPath(job, new Path("hdfs://master:8020/input.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("hdfs://master:8020/output"));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

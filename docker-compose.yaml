@@ -1,15 +1,19 @@
 services:
   master:
-    image: caobaoqi1029/big-data-study:0.3.0
+    image: caobaoqi1029/big-data-study-vscode:0.4.0
     container_name: master
     hostname: master # TODO: Change this to name-SID-1
     ports:
       - "8088:8088" # Yarn Web UI
       - "8020:8020"
-
+#      - "127.0.0.1:8080:8080"  # Code server
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
+    volumes:
+      - ./:/root/code-dev
+      - ~/.m2:/root/.m2
+      - code-server-data:/opt/code-server/data  # code-server 缓存目录
     networks:
       - hadoop-network
     depends_on:
@@ -18,7 +22,7 @@ services:
       - slave3
 
   slave1:
-    image: caobaoqi1029/big-data-study:0.3.0
+    image: caobaoqi1029/big-data-study:0.4.0
     container_name: slave1
     hostname: slave1 # TODO: Change this to name-SID-2
     command: bash -c "
@@ -28,7 +32,7 @@ services:
       - hadoop-network
 
   slave2:
-    image: caobaoqi1029/big-data-study:0.3.0
+    image: caobaoqi1029/big-data-study:0.4.0
     container_name: slave2
     hostname: slave2 # TODO: Change this to name-SID-3
     command: bash -c "
@@ -38,7 +42,7 @@ services:
       - hadoop-network
 
   slave3:
-    image: caobaoqi1029/big-data-study:0.3.0
+    image: caobaoqi1029/big-data-study:0.4.0
     container_name: slave3
     hostname: slave3 # TODO: Change this to name-SID-4
     command: bash -c "
@@ -46,6 +50,9 @@ services:
       tail -f /dev/null"
     networks:
       - hadoop-network
+
+volumes:
+  code-server-data: {}
 
 networks:
   hadoop-network:
