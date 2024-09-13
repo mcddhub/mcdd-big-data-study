@@ -6,14 +6,12 @@ services:
     ports:
       - "8088:8088" # Yarn Web UI
       - "8020:8020"
-#      - "127.0.0.1:8080:8080"  # Code server
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
     volumes:
       - ./:/root/code-dev
       - ~/.m2:/root/.m2
-      - code-server-data:/opt/code-server/data  # code-server 缓存目录
     networks:
       - hadoop-network
     depends_on:
