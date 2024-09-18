@@ -10,7 +10,7 @@ repository:
   description: Study project for big data (Hadoop, Zookeeper, Kafka, Flink, Spark)
 
   # A URL with more information about the repository
-  homepage: https://github.com/mcddhub/mcdd-big-data-study
+  homepage: https://mcddhub.github.io/mcdd-big-data-study/
 
   # A comma-separated list of topics to set on the repository
   topics: big-data, hadoop, zookeeper, kafka, flink, spark, docker, data-processing
