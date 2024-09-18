@@ -6,49 +6,27 @@ study project for big data (hadoop、zookeeper、kafka、flink、spark)
 ## 功能 ✨
 
 > [!NOTE]
-> - hadoop 3.3.6 (with jdk 1.8、maven 3.6.3)
+> - hadoop 3.3.6 (with jdk 8.0.352-zulu、maven 3.6.3)
 > - zookeeper 3.9.2
 > - kafka_2.12-3.7.1
 
 ## 安装 📦
 
+1. `git clone https://github.com/mcddhub/mcdd-big-data-study.git --depth=1 && cd mcdd-big-data-study`
+2. 构建镜像
+
 ```sh
-git clone https://github.com/mcddhub/mcdd-big-data-study.git --depth=1
-```
-
-## 配置 🛠
-
-1. 构建镜像
-2. docker compose up
-3. init dev path
-
-### build with local (without vs code)
-
-```shell
 cd docker
-docker build -f docker\Dockerfile -t caobaoqi1029/big-data-study:0.4.0 .
+docker build -t caobaoqi1029/big-data-study:x.x.x .
 ```
 
-构建出 big-data-study 镜像
+> [!TIP]
+>
+> 注意将 x.x.x 替换
 
 ![image-20240914062413373](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140624869.png)
 
 ![image-20240914063024077](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140630136.png)
-
-### build with code-server(vs code)
-
-```shell
-cd docker/vscode
-docker build -t caobaoqi1029/big-data-study-vscode:0.4.0 .
-```
-
-构建出 big-data-study-vscode 镜像
-
-![image-20240914063057735](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140630798.png)
-
-![image-20240914063327139](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140633229.png)
-
-docker compose up
 
 ```sh
 docker compose up -d
@@ -56,41 +34,21 @@ docker compose up -d
 
 ![image-20240914063500121](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140635196.png)
 
-init dev path
+## 配置 🛠
+
+通过 vs code 远程连接到远程服务器然后在命令界面选择 附加到正在运行的容器
+
+![image-20240918083549790](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409180835928.png)
+
+![image-20240918083646884](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409180836305.png)
+
+安装 Java dev 拓展
+
+![image-20240918083747538](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409180837632.png)
 
 ```sh
 docker exec -it master bash
-mkdir -p .config/code-server
-exit
-```
-
-![image-20240914063708134](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140637226.png)
-
-```sh
-docker cp ./docker/vscode/config.yaml master:/root/.config/code-server
-```
-
-![image-20240914063742017](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140637073.png)
-
-```sh
-docker exec -it master bash
-cd scripts
-./vscode.sh
-code server
-```
-
-![image-20240914063900871](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140639971.png)
-
-验证 访问 localhost:8080 访问 code-server 其中密码在 
-
-![image-20240914063950319](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140639432.png)
-
-![image-20240914064338017](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140643164.png)
-
-启动 hadoop 环境
-
-```sh
-hdfs namenode -format
+hdfs namenode -format # 启动 hadoop 环境
 ```
 
 ![image-20240914065454899](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140654020.png)
@@ -130,7 +88,7 @@ hdfs dfs -cat /output/part-r-00000
 
 ![image-20240914070205413](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140702534.png)
 
-或者
+或者(需要将 `export CLASSPATH=$CLASSPATH:/tmp/` 写入 .bashrc 否则执行 jar 会提示找不到 XXX)
 
 ![image-20240914070246292](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140702423.png)
 

@@ -8,12 +8,26 @@ WORKDIR /root/
 # apt 换清华源(使用 http, 因为 https 需要 certificates)
 RUN sed -i "s@http://.*.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
 
-# 安装 JDK 等
+# 安装常用工具和依赖
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk wget vim openssh-server net-tools && \
-    apt-get install -y curl maven git
+    apt-get install -y wget vim openssh-server net-tools curl git zip && \
+    apt-get clean
 
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+# 安装 SDKMAN
+RUN curl -s "https://get.sdkman.io" | bash
+
+# 配置 SDKMAN 环境
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk version"
+
+# 使用 SDKMAN 安装 JDK、Maven 和 Gradle
+RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && \
+    sdk install java 8.0.352-zulu && \
+    sdk install maven 3.6.3"
+
+# 设置 JAVA_HOME
+ENV JAVA_HOME=/root/.sdkman/candidates/java/current
+ENV MAVEN_HOME=/root/.sdkman/candidates/maven/current
+ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 
 # scripts
 COPY scripts/* /root/scripts/
@@ -52,10 +66,8 @@ RUN echo "slave2" >> /root/hadoop/etc/hadoop/workers
 RUN echo "slave3" >> /root/hadoop/etc/hadoop/workers
 
 ENV HADOOP_HOME=/root/hadoop
-
 RUN mkdir $HADOOP_HOME/tmp
 ENV HADOOP_TMP_DIR=$HADOOP_HOME/tmp
-
 RUN mkdir $HADOOP_HOME/namenode
 RUN mkdir $HADOOP_HOME/datanode
 
@@ -82,7 +94,7 @@ ENV PATH=$KAFKA_HOME/bin:$PATH
 
 # 配置 Hadoop
 COPY hadoop_config/* /root/hadoop/etc/hadoop/
-RUN sed -i '1i export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' /root/hadoop/etc/hadoop/hadoop-env.sh
+RUN sed -i '1i export JAVA_HOME=/root/.sdkman/candidates/java/current' /root/hadoop/etc/hadoop/hadoop-env.sh
 
 # 配置 Zookeeper
 RUN mkdir /root/zookeeper/tmp
@@ -102,4 +114,3 @@ RUN echo "export HADOOP_CLASSPATH=`hadoop classpath`" >> /root/.bashrc
 
 # 启动 SSH 服务
 CMD ["bash", "-c", "bash"]
-

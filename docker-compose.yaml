@@ -1,11 +1,12 @@
 services:
   master:
-    image: caobaoqi1029/big-data-study-vscode:0.4.0
+    image: caobaoqi1029/big-data-study:1.0.0
     container_name: master
-    hostname: master # TODO: Change this to name-SID-1
+    hostname: master
     ports:
-      - "8088:8088" # Yarn Web UI
-      - "8020:8020"
+      - "8088:8088" # YARN ResourceManager web UI, 用于监控和管理 YARN 资源
+      - "8020:8020" # HDFS NameNode RPC 端口, 用于 HDFS 客户端和 NameNode 之间的通信
+      - "9870:9870" # HDFS NameNode web UI, 用于查看 HDFS 状态和信息
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
@@ -20,9 +21,9 @@ services:
       - slave3
 
   slave1:
-    image: caobaoqi1029/big-data-study:0.4.0
+    image: caobaoqi1029/big-data-study:1.0.0
     container_name: slave1
-    hostname: slave1 # TODO: Change this to name-SID-2
+    hostname: slave1
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
@@ -30,9 +31,9 @@ services:
       - hadoop-network
 
   slave2:
-    image: caobaoqi1029/big-data-study:0.4.0
+    image: caobaoqi1029/big-data-study:1.0.0
     container_name: slave2
-    hostname: slave2 # TODO: Change this to name-SID-3
+    hostname: slave2
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
@@ -40,17 +41,22 @@ services:
       - hadoop-network
 
   slave3:
-    image: caobaoqi1029/big-data-study:0.4.0
+    image: caobaoqi1029/big-data-study:1.0.0
     container_name: slave3
-    hostname: slave3 # TODO: Change this to name-SID-4
+    hostname: slave3
     command: bash -c "
       service ssh restart &&
       tail -f /dev/null"
     networks:
       - hadoop-network
-
-volumes:
-  code-server-data: {}
+  firefox:
+    image: jlesage/firefox
+    container_name: firefox
+    hostname: firefox
+    ports:
+      - "5800:5800" # VNC server port for Firefox, 用于通过浏览器访问 VNC 界面
+    networks:
+      - hadoop-network
 
 networks:
   hadoop-network:
