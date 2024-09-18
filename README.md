@@ -1,5 +1,5 @@
 <p align="center">
- <img src="/assets/android-icon-192x192.png" width="32" alt="Mcdd-Big-Data-Study">
+ <img src="/assets/android-icon-192x192.png" width="32" alt="Mcdd-Big-Data-Study" style="width: 150px; height: 150px;">
 </p>
 <div align="center">
   <h1 align="center">Mcdd-Big-Data-Study</h1>
