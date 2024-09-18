@@ -37,3 +37,4 @@ out/
 .vscode/
 /.fastRequest/
 /target/
+/input.txt
