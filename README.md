@@ -1,9 +1,15 @@
-<p align="center">
- <img src="/assets/android-icon-192x192.png" width="32" alt="Mcdd-Big-Data-Study" style="width: 150px; height: 150px;">
-</p>
 <div align="center">
+<a href="https://mcddhub.github.io/mcdd-big-data-study/">
+  <picture>
+ <img src="/assets/android-icon-192x192.png" width="150" alt="Mcdd-Big-Data-Study" style="width: 150px; height: 150px;">
+  </picture>
+</a>
   <h1 align="center">Mcdd-Big-Data-Study</h1>
   <p>Study project for big data (Hadoop, Zookeeper, Kafka, Flink, Spark)</p>
+
+[![License](https://img.shields.io/github/license/mcddhub/mcdd-data-structure-study)](https://github.com/mcddhub/mcdd-data-structure-study/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/mcddhub/mcdd-data-structure-study)](https://github.com/mcddhub/mcdd-data-structure-study)
+
 </div>
 
 ---
@@ -13,8 +19,8 @@
 > **Supported Technologies**:
 >
 > - **Hadoop 3.3.6** (with JDK 8.0.352-zulu, Maven 3.6.3)
-> - **Zookeeper 3.9.2**
-> - **Kafka 2.12-3.7.1**
+>   - **Zookeeper 3.9.2**
+>   - **Kafka 2.12-3.7.1**
 
 ---
 
@@ -24,11 +30,11 @@
    ```bash
    git clone https://github.com/mcddhub/mcdd-big-data-study.git --depth=1 && cd mcdd-big-data-study
    ```
-2. Build the Docker image:
-   ```bash
-   cd docker
-   docker build -t caobaoqi1029/big-data-study:x.x.x .
-   ```
+   2. Build the Docker image:
+      ```bash
+      cd docker
+      docker build -t caobaoqi1029/big-data-study:x.x.x .
+      ```
 
 > **Note**: Replace `x.x.x` with the appropriate version number.
 
@@ -130,7 +136,8 @@
 
 ## Contributing 🤝
 
-We welcome contributions! Feel free to submit a pull request. For more details, see the [Contribution Guide](https://github.com/mcddhub/mcdd-big-data-study/blob/main/CONTRIBUTING.md).
+We welcome contributions! Feel free to submit a pull request. For more details, see
+the [Contribution Guide](https://github.com/mcddhub/mcdd-big-data-study/blob/main/CONTRIBUTING.md).
 
 <div align="center">
   <p>Thanks to all contributors:</p>
@@ -143,7 +150,8 @@ We welcome contributions! Feel free to submit a pull request. For more details, 
 
 ## License 📄
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/mcddhub/mcdd-big-data-study/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See
+the [LICENSE](https://github.com/mcddhub/mcdd-big-data-study/blob/main/LICENSE) file for details.
 
 ---
 
