@@ -117,6 +117,10 @@ cd target/
 hadoop jar big-data.jar
 ```
 
+> [!TIP]
+>
+> 或者也可以通过 `export CLASSPATH=$CLASSPATH:/tmp/ # 将其写入 .bashrc 否则执行 jar 会提示找不到 XXX` 即可直接执行 Java 无需手动执行 mvn 命令
+
 ![image-20240914070100713](https://mcddhub-1311841992.cos.ap-beijing.myqcloud.com/picgo/202409140701832.png)
 
 ```sh
@@ -160,5 +164,3 @@ hdfs dfs -cat /output/part-r-00000
 <div align="center">
 
 <img src="https://api.star-history.com/svg?repos=mcddhub/mcdd-big-data-study&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
-
-</div>
