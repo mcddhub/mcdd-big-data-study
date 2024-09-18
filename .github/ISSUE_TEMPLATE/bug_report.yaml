@@ -1,0 +1,86 @@
+name: 错误报告
+description: 提交一个错误报告
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写这份错误报告！在提交“错误”之前，请确保没有现有的 issue 与您遇到的问题相同，并且已经通过[讨论区](https://github.com/coder-mcdd/mcdd-spring-boot-study/discussions)或 Slack 与团队讨论过。如果确定这是一个新问题，请按以下表格填写相关信息。
+  - type: dropdown
+    id: module
+    attributes:
+      label: 模块
+      description: 您使用的是哪个模块？
+      options:
+        - 核心
+        - 数据库
+        - 网络
+        - 安全
+        - UI
+        - ...
+    validations:
+      required: true
+  - type: input
+    id: tc-version
+    attributes:
+      label: 版本
+      description: 您使用的是哪个版本？
+      placeholder: 例如 1.17.2 或 v1.5.0-alpha
+    validations:
+      required: true
+  - type: dropdown
+    id: latest-version
+    attributes:
+      label: 是否使用最新的版本？
+      description: 如果您没有使用最新版本，您能否更新项目并尝试重现问题？问题是否仍然存在？如果不确定最新版本，可以访问[发布页面](https://github.com/coder-mcdd/mcdd-spring-boot-study/releases)进行检查。
+      options:
+        - '是'
+        - '否'
+    validations:
+      required: true
+  - type: input
+    id: host-os
+    attributes:
+      label: 主机操作系统
+      description: 您使用的是哪种操作系统？
+      placeholder: 例如 Linux, Windows, macOS
+    validations:
+      required: true
+  - type: input
+    id: host-arch
+    attributes:
+      label: 主机架构
+      description: 您使用的是哪种架构？
+      placeholder: 例如 x86, ARM, ARM64
+    validations:
+      required: true
+  - type: textarea
+    id: docker-version
+    attributes:
+      label: Docker 版本
+      description: 请运行 `docker version` 命令，并将输出复制粘贴到此字段中。
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 请提供问题发生的上下文、预期结果以及实际发生的情况。
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志输出
+      description: 请复制并粘贴任何相关的日志输出。内容将自动格式化为代码，因此无需使用反引号。建议您提供完整的日志路径，以便更容易定位问题。
+      render: shell
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 附加信息
+      description: |
+        任何链接或参考资料，以提供有关问题的更多上下文。
+
+        提示: 您可以通过点击此区域来聚焦它，然后拖动文件进来，以附加一个最小的示例项目来重现问题，或上传更多日志文件。

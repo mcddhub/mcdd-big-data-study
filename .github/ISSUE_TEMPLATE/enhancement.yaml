@@ -1,0 +1,46 @@
+name: 功能增强
+description: 提出功能增强建议
+title: "[Enhancement]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        在提交 `功能增强` 建议之前，请确保没有与您请求相同的现有增强建议，并且已经通过 [讨论区](https://github.com/mcddhub/mcdd-spring-boot-study/discussions) 或 Slack 与团队讨论过。如果已经确认，请按照以下格式填写相关信息：
+
+        **注意**: 提供尽可能详细的信息，将有助于团队更好地理解和评估您的建议。
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: 模块
+      description: 这个功能增强建议适用于哪个模块？
+      options:
+        - 核心模块
+        - 用户界面
+        - API
+        - 数据库
+        - 安全性
+        - 网络
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议内容
+      description: |
+        1. 您希望改进什么功能？
+        2. 当前的实现有哪些局限性？
+        3. 您的建议如何解决这些问题？请详细描述增强功能的细节。
+        4. 如果适用，是否有类似项目或功能可供参考？
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 附加信息
+      description: |
+        请提供任何附加信息、参考资料或链接，帮助团队更好地理解您的建议。
+        
+        **提示**: 您可以通过点击此区域来聚焦它，然后拖动文件或链接到此区域，以提供更多信息。

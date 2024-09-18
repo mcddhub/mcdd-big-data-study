@@ -42,7 +42,7 @@ public class WordCount {
         private IntWritable result = new IntWritable();
 
         public void reduce(Text key, Iterable<IntWritable> values,
-                Context context) throws IOException, InterruptedException {
+                           Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable val : values) {
                 sum += val.get();
@@ -61,8 +61,8 @@ public class WordCount {
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path("hdfs://master:8020/input.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("hdfs://master:8020/output"));
+        FileInputFormat.addInputPath(job, new Path(HDFS_URI + "/input.txt"));
+        FileOutputFormat.setOutputPath(job, new Path(HDFS_URI + "/output"));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

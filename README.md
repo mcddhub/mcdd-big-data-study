@@ -1,128 +1,164 @@
+
 <div align="center">
-<h1 align="center">Mcdd-Big-Data-Study</h1>
-study project for big data (hadoop、zookeeper、kafka、flink、spark)
+  <h1 align="center">Mcdd-Big-Data-Study</h1>
+  <p>Study project for big data (Hadoop, Zookeeper, Kafka, Flink, Spark)</p>
 </div>
 
-## 功能 ✨
+---
 
-> [!NOTE]
+## Features ✨
+
+> **Supported Technologies**:
 >
-> - hadoop 3.3.6 (with jdk 8.0.352-zulu、maven 3.6.3)
-> - zookeeper 3.9.2
-> - kafka_2.12-3.7.1
+> - **Hadoop 3.3.6** (with JDK 8.0.352-zulu, Maven 3.6.3)
+> - **Zookeeper 3.9.2**
+> - **Kafka 2.12-3.7.1**
 
-## 安装 📦
+---
 
-1. `git clone https://github.com/mcddhub/mcdd-big-data-study.git --depth=1 && cd mcdd-big-data-study`
-2. 构建镜像
+## Installation 📦
 
-```sh
-cd docker
-docker build -t caobaoqi1029/big-data-study:x.x.x .
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mcddhub/mcdd-big-data-study.git --depth=1 && cd mcdd-big-data-study
+   ```
+2. Build the Docker image:
+   ```bash
+   cd docker
+   docker build -t caobaoqi1029/big-data-study:x.x.x .
+   ```
 
-> [!TIP]
->
-> 注意将 x.x.x 替换
-
-![image-20240914062413373](./assets/202409180939125-1726623623512-6.png)
-
-![image-20240914063024077](./assets/202409140630136.png)
-
-```sh
-docker compose up -d
-```
-
-![image-20240914063500121](./assets/202409140635196.png)
-
-## 配置 🛠
-
-通过 vs code 远程连接到远程服务器然后在命令界面选择 附加到正在运行的容器
-
-![image-20240918083549790](./assets/202409180835928.png)
-
-![image-20240918083646884](./assets/202409180836305.png)
-
-安装 Java dev 拓展
-
-![image-20240918083747538](./assets/202409180837632.png)
-
-然后重启拓展宿主
-
-![image-20240918093712885](./assets/202409180937017.png)
-
-```sh
-docker exec -it master bash
-hdfs namenode -format # 启动 hadoop 环境
-```
-
-![image-20240914065454899](./assets/202409140654020.png)
-
-```sh
-start-all.sh
-```
-
-![image-20240914065600313](./assets/202409140656454.png)
-
-使用 
-
-```sh
-vim input.txt
-hdfs dfs -put -f ./input.txt /
-hdfs dfs -ls /
-```
-
-![image-20240914065847822](./assets/202409140658928.png)
-
-```sh
-mvn clean package
-cd target/
-hadoop jar big-data.jar
-```
-
-> [!TIP]
->
-> 或者也可以通过 `export CLASSPATH=$CLASSPATH:/tmp/ # 将其写入 .bashrc 否则执行 jar 会提示找不到 XXX` 即可直接执行 Java 无需手动执行 mvn 命令
-
-![image-20240914070100713](./assets/202409140701832.png)
-
-```sh
-hdfs dfs -ls /output
-hdfs dfs -cat /output/part-r-00000
-```
-
-![image-20240914070205413](./assets/202409140702534.png)
-
-或者(需要将 `export CLASSPATH=$CLASSPATH:/tmp/` 写入 .bashrc 否则执行 jar 会提示找不到 XXX)
-
-![image-20240914070246292](./assets/202409140702423.png)
-
-![image-20240914070300541](./assets/202409140703678.png)
-
-## 更新日志 📅
-
-- v0.4.0 (hadoop、zookeeper、kafka、code-server)
-
-## 贡献 🤝
-
-欢迎贡献！请随时提交拉取请求。有关详细信息，请参阅 [贡献指南](https://github.com/mcddhub/mcdd-big-data-study/blob/main/CONTRIBUTING.md)。
-
-这个项目的存在感谢所有贡献者：
-
-<a href="https://github.com/mcddhub/mcdd-big-data-study/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mcddhub/mcdd-big-data-study" />
-</a>
-
-## 许可证 📄
-
-此项目根据 MIT 许可证授权 -
-有关详细信息，请参阅 [LICENSE](https://github.com/mcddhub/mcdd-big-data-study/blob/main/LICENSE) 文件。
-
-## 支持 💖
-
-如果你觉得这个项目有帮助，请考虑在 [GitHub](https://github.com/mcddhub/mcdd-big-data-study) 上给它一个 ⭐️！
-
-## Star 历史 ⭐
+> **Note**: Replace `x.x.x` with the appropriate version number.
 
 <div align="center">
-<img src="https://api.star-history.com/svg?repos=mcddhub/mcdd-big-data-study&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
+  <img src="./assets/202409180939125-1726623623512-6.png" alt="Docker Build Image" />
+  <img src="./assets/202409140630136.png" alt="Docker Build Complete" />
+</div>
+
+3. Start the containers:
+   ```bash
+   docker compose up -d
+   ```
+
+<div align="center">
+  <img src="./assets/202409140635196.png" alt="Docker Compose" />
+</div>
+
+---
+
+## Configuration 🛠
+
+1. Connect to the remote server via **VS Code** and attach to a running container.
+
+<div align="center">
+  <img src="./assets/202409180835928.png" alt="VS Code Container Connection" />
+  <img src="./assets/202409180836305.png" alt="Container Connection" />
+</div>
+
+2. Install the **Java Dev** extension in VS Code.
+
+<div align="center">
+  <img src="./assets/202409180837632.png" alt="Java Dev Extension" />
+</div>
+
+3. Restart the extension host to apply changes.
+
+<div align="center">
+  <img src="./assets/202409180937017.png" alt="Restarting Extension Host" />
+</div>
+
+4. Initialize Hadoop environment:
+   ```bash
+   docker exec -it master bash
+   hdfs namenode -format
+   ```
+
+<div align="center">
+  <img src="./assets/202409140654020.png" alt="HDFS Format" />
+</div>
+
+5. Start Hadoop services:
+   ```bash
+   start-all.sh
+   ```
+
+<div align="center">
+  <img src="./assets/202409140656454.png" alt="Hadoop Start" />
+</div>
+
+6. Use the following commands to interact with Hadoop:
+   ```bash
+   vim input.txt
+   hdfs dfs -put -f ./input.txt /
+   hdfs dfs -ls /
+   ```
+
+<div align="center">
+  <img src="./assets/202409140658928.png" alt="HDFS Commands" />
+</div>
+
+7. Build and run the Hadoop job:
+   ```bash
+   mvn clean package
+   cd target/
+   hadoop jar big-data.jar
+   ```
+
+> **Tip**: You can set the environment variable to run Java directly:
+> ```bash
+> export CLASSPATH=$CLASSPATH:/tmp/
+> # Add this to .bashrc for persistence.
+> ```
+
+<div align="center">
+  <img src="./assets/202409140701832.png" alt="Java Execution" />
+</div>
+
+8. View the output:
+   ```bash
+   hdfs dfs -ls /output
+   hdfs dfs -cat /output/part-r-00000
+   ```
+
+<div align="center">
+  <img src="./assets/202409140702534.png" alt="Output View" />
+</div>
+
+---
+
+## Changelog 📅
+
+- **v0.4.0**: Added Hadoop, Zookeeper, Kafka, and Code-server.
+
+---
+
+## Contributing 🤝
+
+We welcome contributions! Feel free to submit a pull request. For more details, see the [Contribution Guide](https://github.com/mcddhub/mcdd-big-data-study/blob/main/CONTRIBUTING.md).
+
+<div align="center">
+  <p>Thanks to all contributors:</p>
+  <a href="https://github.com/mcddhub/mcdd-big-data-study/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=mcddhub/mcdd-big-data-study" alt="Contributors" />
+  </a>
+</div>
+
+---
+
+## License 📄
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/mcddhub/mcdd-big-data-study/blob/main/LICENSE) file for details.
+
+---
+
+## Support 💖
+
+If you find this project helpful, consider giving it a ⭐️ on [GitHub](https://github.com/mcddhub/mcdd-big-data-study)!
+
+---
+
+## Star History ⭐
+
+<div align="center">
+  <img src="https://api.star-history.com/svg?repos=mcddhub/mcdd-big-data-study&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
+</div>

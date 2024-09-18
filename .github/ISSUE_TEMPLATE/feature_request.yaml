@@ -1,0 +1,76 @@
+name: 功能请求
+description: 建议一个新功能
+title: "[Feature]: "
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您提出新的功能建议！在提交 "功能请求" 之前，请确保没有现有的功能与您请求的相同，并且已经通过 [讨论区](https://github.com/mcddhub/mcdd-spring-boot-study/discussions) 或 Slack 与团队讨论过。如果确认这是一个新的请求，请按照以下信息提交您的建议：
+
+        **提示**: 提供尽可能详细的信息，将有助于团队评估和理解您的请求。
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: 模块
+      description: 这个功能是否与任何现有模块相关？
+      options:
+        - 核心模块
+        - API
+        - 用户界面
+        - 数据库
+        - 网络
+        - 安全
+        - 新模块
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 这个功能是否与某个问题相关？请详细描述这个问题，说明问题的背景和现状。
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: 建议的解决方案
+      description: 对于这个功能，您提议的解决方案是什么？请详细描述您设想的功能实现方式或界面。
+    validations:
+      required: true
+  - type: textarea
+    id: benefit
+    attributes:
+      label: 功能的好处
+      description: 添加这个功能将给项目带来哪些好处？请描述这个功能将如何改进项目、提升用户体验或解决现有问题。
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 替代方案
+      description: 是否有其他的解决方案或替代方案？请描述您考虑过的其他选项，及其优缺点。
+    validations:
+      required: true
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: 您是否愿意帮助贡献这个功能？
+      description: 您是否愿意参与实现此功能（例如，贡献代码、测试、撰写文档等）？
+      options:
+        - '是，贡献代码'
+        - '是，贡献测试'
+        - '是，贡献文档'
+        - '否，暂时不'
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 附加信息
+      description: |
+        任何附加信息、相关链接、讨论或参考资料，这些信息有助于我们更好地理解您的请求。
+
+        **提示**: 您可以拖动文件或粘贴链接到此区域，以提供更多信息。

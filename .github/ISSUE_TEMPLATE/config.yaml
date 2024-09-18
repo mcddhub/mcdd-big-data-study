@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Need help or have a question?
+    url: https://join.slack.com/mcddhub
+    about: Join our Slack channel for real-time help and support.
+  - name: Have a question or want to start a Community discussion?
+    url: https://github.com/mcddhub/mcdd-spring-boot-study/discussions/
+    about: Visit our Discussions page to ask questions or start conversations with the community.

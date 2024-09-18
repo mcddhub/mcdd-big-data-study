@@ -1,0 +1,95 @@
+# Repository settings for mcdd-big-data-study
+repository:
+  name: mcdd-big-data-study
+  description: "Study project for big data (Hadoop, Zookeeper, Kafka, Flink, Spark)"
+  homepage: https://github.com/mcddhub/mcdd-big-data-study
+  topics:
+    - big-data
+    - hadoop
+    - zookeeper
+    - kafka
+    - flink
+    - spark
+    - docker
+    - data-processing
+  default_branch: main
+  delete_branch_on_merge: true
+  squash_merge: true
+  merge_commit: true
+  rebase_merge: true
+
+# Settings for managing issues and pull requests
+issues:
+  enabled: true
+  contact_links:
+    - name: "Report a Bug"
+      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D
+      about: "Create a new bug report if you encounter an issue."
+    - name: "Request a Feature"
+      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D
+      about: "Submit a feature request to improve the project."
+
+pull_requests:
+  enabled: true
+  require_code_owner_reviews: true
+  required_approving_review_count: 2
+
+# Labels to auto-create for issues and PRs
+labels:
+  - name: "bug"
+    color: "d73a4a"
+    description: "Something isn't working"
+  - name: "feature"
+    color: "1d76db"
+    description: "New feature or request"
+  - name: "enhancement"
+    color: "a2eeef"
+    description: "Improvement or update to an existing feature"
+  - name: "breaking-api-change"
+    color: "ff0000"
+    description: "Changes that break the API"
+  - name: "deprecation"
+    color: "ffa500"
+    description: "Deprecated functionality or warnings"
+  - name: "docs"
+    color: "0075ca"
+    description: "Documentation changes"
+  - name: "dependencies"
+    color: "0366d6"
+    description: "Dependency updates"
+  - name: "housekeeping"
+    color: "d4c5f9"
+    description: "Refactor, cleanup, or tests"
+
+# Branch protection rules
+branch_protection:
+  - branch: main
+    required_status_checks:
+      strict: true
+      contexts:
+        - test
+        - build
+    required_pull_request_reviews:
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+    enforce_admins: false
+    restrictions:
+      users: []
+      teams: []
+    allow_force_pushes: false
+    allow_deletions: false
+
+# Automated security updates
+security:
+  dependency_graph: true
+  dependabot_alerts: true
+  dependabot_security_updates: true
+
+# Contributors settings
+contributors:
+  enabled: true
+  contributors_badge: true
+  path: CONTRIBUTORS.md
+
+# License configuration
+license: MIT
