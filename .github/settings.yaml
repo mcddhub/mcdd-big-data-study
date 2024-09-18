@@ -23,10 +23,13 @@ issues:
   enabled: true
   contact_links:
     - name: "Report a Bug"
-      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D
+      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBug%5D%3A+
       about: "Create a new bug report if you encounter an issue."
+    - name: "Enhancement"
+      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=enhancement&projects=&template=enhancement.yaml&title=%5BEnhancement%5D%3A+
+      about: "If you have a good suggestion please submit an enhancement report to us!"
     - name: "Request a Feature"
-      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D
+      url: https://github.com/mcddhub/mcdd-big-data-study/issues/new?assignees=&labels=feature&projects=&template=feature_request.yaml&title=%5BFeature%5D%3A+
       about: "Submit a feature request to improve the project."
 
 pull_requests:
