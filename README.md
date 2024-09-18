@@ -126,12 +126,6 @@
 
 ---
 
-## Changelog 📅
-
-- **v0.4.0**: Added Hadoop, Zookeeper, Kafka, and Code-server.
-
----
-
 ## Contributing 🤝
 
 We welcome contributions! Feel free to submit a pull request. For more details, see the [Contribution Guide](https://github.com/mcddhub/mcdd-big-data-study/blob/main/CONTRIBUTING.md).
