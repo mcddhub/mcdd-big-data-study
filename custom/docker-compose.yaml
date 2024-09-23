@@ -1,0 +1,75 @@
+services:
+  master:
+    image: mcddhub/big-data-study:0.1.2
+    container_name: master
+    hostname: master
+    ports:
+      - "8020:8020" # fs.defaultFS
+      - "9870:9870" # NameNode Web UI
+      - "9868:9868" # Secondary NameNode Web UI
+    command: bash -c "
+      service ssh restart &&
+      hdfs namenode -format &&
+      start-all.sh &&
+      echo 1 > /root/zookeeper/tmp/myid &&
+      zkServer.sh start &&
+      start-hbase.sh &&
+      tail -f /dev/null"
+    volumes:
+      - ./:/root/code-dev
+      - ~/.m2:/root/.m2
+    networks:
+      - hadoop-network
+    depends_on:
+      - slave1
+      - slave2
+      - slave3
+  
+  slave1:
+    image: mcddhub/big-data-study:0.1.2
+    container_name: slave1
+    hostname: slave1
+    command: bash -c "
+      service ssh restart &&
+      echo 2 > /root/zookeeper/tmp/myid &&
+      zkServer.sh start &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+  
+  slave2:
+    image: mcddhub/big-data-study:0.1.2
+    container_name: slave2
+    hostname: slave2
+    command: bash -c "
+      service ssh restart &&
+      echo 3 > /root/zookeeper/tmp/myid &&
+      zkServer.sh start &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+
+  slave3:
+    image: mcddhub/big-data-study:0.1.2
+    container_name: slave3
+    hostname: slave3
+    command: bash -c "
+      service ssh restart &&
+      echo 4 > /root/zookeeper/tmp/myid &&
+      zkServer.sh start &&
+      tail -f /dev/null"
+    networks:
+      - hadoop-network
+  
+  firefox:
+    image: jlesage/firefox
+    container_name: firefox
+    hostname: firefox
+    ports:
+      - "5800:5800" # VNC server port for Firefox, 用于通过浏览器访问 VNC 界面
+    networks:
+      - hadoop-network
+
+networks:
+  hadoop-network:
+    driver: bridge

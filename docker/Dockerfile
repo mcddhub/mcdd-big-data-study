@@ -58,7 +58,14 @@ RUN wget https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/3.7.1/kafka_2.12-3.7.
 RUN tar -xzvf kafka_2.12-3.7.1.tgz && \
     rm kafka_2.12-3.7.1.tgz && \
     mv kafka_2.12-3.7.1 kafka && \
-    chmod -R 777 kafka
+    chmod -R 777 kafka \
+
+# 下载并解压 Hbase
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/2.5.10/hbase-2.5.10-bin.tar.gz
+RUN tar -xzvf hbase-2.5.10-bin.tar.gz && \
+    rm hbase-2.5.10-bin.tar.gz && \
+    mv hbase-2.5.10 hbase && \
+    chmod -R 777 hbase \
 
 # Hadoop
 RUN echo "slave1" >> /root/hadoop/etc/hadoop/workers
@@ -91,6 +98,10 @@ ENV PATH=$ZOOKEEPER_HOME/bin:$PATH
 # kafka
 ENV KAFKA_HOME=/root/kafka
 ENV PATH=$KAFKA_HOME/bin:$PATH
+
+# Hbase
+ENV HBASE_HOME=/root/hbase
+ENV PATH=$HBASE_HOME/bin:$PATH
 
 # 配置 Hadoop
 COPY hadoop_config/* /root/hadoop/etc/hadoop/
